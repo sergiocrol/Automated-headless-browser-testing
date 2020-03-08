@@ -8,7 +8,7 @@ const redis = require('redis');
 const util = require('util');
 const key = require('../config/keys');
 
-const client = redis.createClient(keys.redisUrl);
+const client = redis.createClient(key.redisUrl);
 client.hget = util.promisify(client.hget);
 // Here we're storing a reference to the original exec function
 const exec = mongoose.Query.prototype.exec;
