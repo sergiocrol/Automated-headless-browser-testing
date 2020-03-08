@@ -29,7 +29,8 @@ class CustomPage {
   static async build() {
     // We create a browser object and a page object
     const browser = await puppeteer.launch({
-      headless: false
+      headless: true,
+      args: ['--no-sandbox']
     });
     const page = await browser.newPage();
     // We create an instance of CustomPage. We pass page object as argument, which contains all the methos of original page() function
@@ -59,7 +60,7 @@ class CustomPage {
     // We set the cookie and cookie.sig and reload the page
     await this.page.setCookie({ name: 'session', value: session });
     await this.page.setCookie({ name: 'session.sig', value: sig });
-    await this.page.goto('localhost:3000/blogs');
+    await this.page.goto('htto://localhost:3000/blogs');
 
     // When we load the this.page and right after we run another function, might happen that the this.page is not loaded yet
     // when is trying to catch <a> element. To solve that we have this.page.waitFor function in Puppeteer, that allows us 

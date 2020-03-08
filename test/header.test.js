@@ -10,7 +10,7 @@ beforeEach(async () => {
   // in our customPage like login() 
   page = await Page.build();
   // We call the url we want
-  await page.goto('localhost:3000');
+  await page.goto('http://localhost:3000');
 })
 
 afterEach(async () => {

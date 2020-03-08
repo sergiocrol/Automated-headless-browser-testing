@@ -1,0 +1,33 @@
+# language we are using
+language: node_js
+# Version of NodeJS, the - means it is an array
+node_js:
+  - "8"
+# an specific Linux distribution very good for small tasks
+dist: trusty
+# Services we need to our project
+services:
+  - mongodb
+  - redis-server
+# An array of environment variables that we want to have set any time our application is run on the CI server
+env:
+  - NODE_ENV=ci PORT=3000
+# Because any time we push our changes, we don't include the node_modules, travis will need to install them any time
+# so to avoid that, we configure travis to install them only the first time and cache it. this speed up the process.
+cache:
+  directories:
+    - node_modules
+    - client/node_modules
+# list off a couple of commands as we will execute them and the command line
+install:
+  - npm install
+  - npm run build
+# Is where we are going to start our server and execute some test
+# nohup npm run start & -> npm: if the shell is closed, dont kill anything this command creates |
+# npm run start: Run the server | &: Rub this command in a subshell (in the background)
+# The idea is that when we run a server in the terminal, we cannot use the terminal to run other commands, so 
+# with & we are telling to run this command in a subshell, in the background
+script:
+  - nohup npm run start &
+  - sleep 3
+  - npm run test
